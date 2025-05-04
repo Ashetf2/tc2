@@ -198,6 +198,9 @@ bool CHealthKit::MyTouch( CBasePlayer *pPlayer )
 
 		if ( bPerformPickup )
 		{
+
+			CreateTimerIcon();
+
 			CSingleUserRecipientFilter user( pPlayer );
 			user.MakeReliable();
 			UserMessageBegin( user, "ItemPickup" );

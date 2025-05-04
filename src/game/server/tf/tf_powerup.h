@@ -66,6 +66,15 @@ public:
 	virtual bool	ItemCanBeTouchedByPlayer( CBasePlayer *pPlayer );
 
 	virtual float	GetLifeTime() { return TF_POWERUP_LIFETIME; }
+
+	#ifdef GAME_DLL
+	void			CreateTimerIcon(void);
+	void			DestroyTimerIcon(void);
+	#endif
+
+private:
+	EHANDLE		m_hTimerIcon;
+
 protected:
 	void			Materialize_Internal( void );
 

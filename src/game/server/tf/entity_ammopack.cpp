@@ -121,6 +121,9 @@ bool CAmmoPack::MyTouch( CBasePlayer *pPlayer )
 		// did we give them anything?
 		if ( bSuccess )
 		{
+
+			CreateTimerIcon();
+
 			CSingleUserRecipientFilter filter( pPlayer );
 			EmitSound( filter, entindex(), TF_AMMOPACK_PICKUP_SOUND );
 

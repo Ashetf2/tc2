@@ -14,6 +14,8 @@
 #include "tf_powerup.h"
 #include "bot/tf_bot.h"
 
+ConVar cl_timer_return_height( "cl_timer_return_height", "12", FCVAR_CHEAT );
+
 //=============================================================================
 float PackRatios[POWERUP_SIZES] =
 {
@@ -125,6 +127,8 @@ void CTFPowerup::Materialize( void )
 	}
 
 	Materialize_Internal();
+
+	DestroyTimerIcon();
 }
 
 //-----------------------------------------------------------------------------
@@ -173,7 +177,39 @@ bool CTFPowerup::ValidTouch( CBasePlayer *pPlayer )
 		return false;
 	}
 
+	//CreateTimerIcon();
+
 	return true;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Create circular timer
+//-----------------------------------------------------------------------------
+void CTFPowerup::CreateTimerIcon(void)
+{
+	if (m_hTimerIcon.Get())
+		return;
+
+	CBaseEntity *pTimerIcon = CBaseEntity::Create( "item_circular_timer", GetAbsOrigin() + Vector(0,0,cl_timer_return_height.GetFloat()), vec3_angle, this );
+	//CBaseEntity* pTimerIcon = CBaseEntity::Create("item_circular_timer", GetAbsOrigin() + Vector(0, 0, 20), vec3_angle, this);
+	if (pTimerIcon)
+	{
+		m_hTimerIcon = pTimerIcon;
+		m_hTimerIcon->SetParent(this);
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Destroy current circular timer
+//-----------------------------------------------------------------------------
+
+void CTFPowerup::DestroyTimerIcon(void)
+{
+	if (!m_hTimerIcon.Get())
+		return;
+
+	UTIL_Remove(m_hTimerIcon);
+	m_hTimerIcon = NULL;
 }
 
 //-----------------------------------------------------------------------------
