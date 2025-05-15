@@ -10,8 +10,11 @@
 #include "tf_player.h"
 #include "tf_team.h"
 #include "engine/IEngineSound.h"
+#include "tf_powerup.h"
 #include "entity_ammopack.h"
 #include "tf_gamestats.h"
+
+
 
 //=============================================================================
 //
@@ -125,6 +128,8 @@ bool CAmmoPack::MyTouch( CBasePlayer *pPlayer )
 			EmitSound( filter, entindex(), TF_AMMOPACK_PICKUP_SOUND );
 
 			CTF_GameStats.Event_PlayerAmmokitPickup( pTFPlayer );
+
+			CreateTimerIcon();
 
 			IGameEvent * event = gameeventmanager->CreateEvent( "item_pickup" );
 			if( event )
