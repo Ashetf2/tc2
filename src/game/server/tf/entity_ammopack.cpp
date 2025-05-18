@@ -121,7 +121,6 @@ bool CAmmoPack::MyTouch( CBasePlayer *pPlayer )
 		// did we give them anything?
 		if ( bSuccess )
 		{
-
 			CreateTimerIcon();
 
 			CSingleUserRecipientFilter filter( pPlayer );

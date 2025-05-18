@@ -5,10 +5,9 @@
 //=============================================================================//
 #include "cbase.h"
 #include "entity_circular_timer.h"
-//#include "tf_gamerules.h"
-//#include "tf_shareddefs.h"
 
 #ifdef CLIENT_DLL
+
 #include "view.h"
 
 ConVar cl_timer_return_size( "cl_timer_return_size", "20", FCVAR_CHEAT );
@@ -17,10 +16,7 @@ ConVar cl_timer_color_green("cl_timer_color_green", "200", FCVAR_CHEAT);
 ConVar cl_timer_color_blue("cl_timer_color_blue", "200", FCVAR_CHEAT);
 ConVar cl_timer_color_alpha("cl_timer_color_alpha", "255", FCVAR_CHEAT);
 
-//#else
-//ConVar cl_flag_return_height( "cl_flag_return_height", "82", FCVAR_CHEAT );
-
-#endif
+#endif //CLIENT_DLL
 
 LINK_ENTITY_TO_CLASS(item_circular_timer, CCircularTimer);
 
@@ -32,9 +28,11 @@ END_NETWORK_TABLE()
 CCircularTimer::CCircularTimer()
 {
 #ifdef CLIENT_DLL
+
 	m_pTimerProgressMaterial_Empty = NULL;
 	m_pTimerProgressMaterial_Full = NULL;
-#endif
+
+#endif //CLIENT_DLL
 }
 
 #ifdef GAME_DLL
@@ -120,18 +118,6 @@ int CCircularTimer::DrawModel( int flags )
 //-----------------------------------------------------------------------------
 void CCircularTimer::DrawTimerProgressBar( void )
 {
-	/* CCaptureFlag *pFlag = dynamic_cast< CCaptureFlag * > ( GetOwnerEntity() );
-
-	if ( !pFlag )
-		return;
-
-	// Don't draw if this flag is not going to reset
-	if ( pFlag->GetMaxResetTime() <= 0 )
-		return;
-
-	if ( !TFGameRules()->FlagsMayBeCapped() )
-		return; */
-
 	if ( !m_pTimerProgressMaterial_Full )
 	{
 		m_pTimerProgressMaterial_Full = materials->FindMaterial( "VGUI/flagtime_empty", TEXTURE_GROUP_VGUI );
@@ -166,25 +152,6 @@ void CCircularTimer::DrawTimerProgressBar( void )
 	unsigned char ubColor[4];
 	ubColor[3] = cl_timer_color_alpha.GetFloat();
 
-/* 	switch( pFlag->GetTeamNumber() )
-	{
-	case TF_TEAM_RED:
-		ubColor[0] = 255;
-		ubColor[1] = 0;
-		ubColor[2] = 0;
-		break;
-	case TF_TEAM_BLUE:
-		ubColor[0] = 0;
-		ubColor[1] = 0;
-		ubColor[2] = 255;
-		break;
-	default:
-		ubColor[0] = 200;
-		ubColor[1] = 200;
-		ubColor[2] = 200;
-		break;
-	} */
-	
 	ubColor[0] = cl_timer_color_red.GetFloat();
 	ubColor[1] = cl_timer_color_green.GetFloat();
 	ubColor[2] = cl_timer_color_blue.GetFloat();
@@ -223,6 +190,8 @@ void CCircularTimer::DrawTimerProgressBar( void )
 
 	//float flProgress = pFlag->GetReturnProgress();
 	
+	//NOTE: we want to change this to get the value of FlItemRespawnTime
+
 	if ( m_flSimStartTime <= 0.0f )
 	m_flSimStartTime = gpGlobals->curtime;
 	
