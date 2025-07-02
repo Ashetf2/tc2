@@ -18615,15 +18615,16 @@ void CTFGameRules::SendHudNotification( IRecipientFilter &filter, HudNotificatio
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CTFGameRules::SendHudNotification( IRecipientFilter &filter, const char *pszText, const char *pszIcon, int iTeam /*= TEAM_UNASSIGNED*/ )
+void CTFGameRules::SendHudNotification( IRecipientFilter &filter, const char *pszText, const char *pszIcon, int iTeam /*= TEAM_UNASSIGNED*/, bool bForceShow /*= false*/ )
 {
-	if ( IsInWaitingForPlayers() )
+	if ( !bForceShow && IsInWaitingForPlayers() )
 		return;
 
 	UserMessageBegin( filter, "HudNotifyCustom" );
 		WRITE_STRING( pszText );
 		WRITE_STRING( pszIcon );
 		WRITE_BYTE( iTeam );
+		WRITE_BOOL( bForceShow );	// Display in cl_hud_minmode
 	MessageEnd();
 }
 
