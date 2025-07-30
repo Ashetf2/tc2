@@ -28,6 +28,8 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+//tc2
+extern ConVar tf_inspect_hide_attribs;
 
 DECLARE_HUDELEMENT( CHudInspectPanel );
 
@@ -197,6 +199,9 @@ void CHudInspectPanel::UserCmd_InspectTarget( void )
 			{
 				m_pItemPanel->SetDialogVariable( "killername", g_PR->GetPlayerName( m_hTarget->entindex() ) );
 				m_pItemPanel->SetItem( pItem );
+
+				//tc2
+				m_pItemPanel->EnableSimpleInspect( tf_inspect_hide_attribs.GetBool() );
 
 				// force update description to get the correct panel size
 				m_pItemPanel->UpdateDescription();

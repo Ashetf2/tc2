@@ -285,6 +285,9 @@ public:
 	virtual void OnCommand( const char *command ) OVERRIDE;
 
 	void	MakeFakeButton() { m_bFakeButton = true; }
+
+	//tc2
+	void	EnableSimpleInspect( bool bHide ) { m_bIsSimpleInspectEnabled = bHide; }
 	
 private:
 	void	UpdateEquippedLabel( void );
@@ -419,6 +422,9 @@ private:
 	bool m_bFakeButton;
 
 	bool m_bInitializedAsContainedItem = false;
+
+	//tc2
+	bool m_bIsSimpleInspectEnabled = false;
 };
 
 //-----------------------------------------------------------------------------

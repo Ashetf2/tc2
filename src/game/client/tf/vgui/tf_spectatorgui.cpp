@@ -48,6 +48,9 @@ extern const char *g_pszItemClassImages[];
 extern int g_ClassDefinesRemap[];
 extern ConVar tf_mvm_buybacks_method;
 
+//tc2
+extern ConVar tf_inspect_hide_attribs;
+
 static const wchar_t* GetSCGlyph( const char* action )
 {
 	auto origin = g_pInputSystem->GetSteamControllerActionOrigin( action, GAME_ACTION_SET_SPECTATOR );
@@ -1005,6 +1008,9 @@ void CTFSpectatorGUI::UpdateItemPanel( bool bForce )
 						}
 
 						m_pItemPanel->SetItem( pItemToShow );
+
+						//tc2
+						m_pItemPanel->EnableSimpleInspect( tf_inspect_hide_attribs.GetBool() );
 
 						// force update description to get the correct panel size
 						m_pItemPanel->UpdateDescription();

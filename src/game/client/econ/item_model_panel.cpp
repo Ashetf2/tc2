@@ -41,6 +41,9 @@
 
 ConVar tf_time_loading_item_panels( "tf_time_loading_item_panels", "0.0005", FCVAR_ARCHIVE, "The time to spend per frame loading data for item panels" );
 
+//tc2
+ConVar tf_inspect_hide_attribs( "tf_inspect_hide_attribs", "0", FCVAR_ARCHIVE, "Hides item attributes in the inspect panel and when spectating." );
+
 const char* g_ItemModelPanelRenderTargetNames[] =
 {
 	"_rt_ItemModelPanel0",
@@ -1832,6 +1835,12 @@ void CItemModelPanel::PerformLayout( void )
 			iAttribTall = 0;
 		}
 
+		//tc2: player wants a simpler inspect panel, so hide the empty space
+		if ( m_bIsSimpleInspectEnabled )
+		{
+			iAttribTall = 0;
+		}
+
 		int iLabelOffset = 0;
 		if ( m_bResizeToText )
 		{
@@ -1979,6 +1988,12 @@ void CItemModelPanel::PerformLayout( void )
 		{
 			m_pItemCollectionHighlight->SetVisible( false );
 		}
+	}
+
+	//tc2
+	if ( m_bIsSimpleInspectEnabled && m_pItemAttribLabel )
+	{
+		m_pItemAttribLabel->SetVisible(false);
 	}
 
 	BaseClass::PerformLayout();
